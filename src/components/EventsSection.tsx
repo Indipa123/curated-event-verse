@@ -100,58 +100,60 @@ const EventsSection = () => {
   });
 
   return (
-    <section id="events" className="py-20 bg-muted/30">
-      <div className="container mx-auto section-padding">
+    <section id="events" className="py-12 sm:py-16 lg:py-20 bg-muted/30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
             Discover Amazing{' '}
             <span className="gradient-text">Events</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Find events that match your interests and connect with like-minded people in your community.
           </p>
         </div>
 
         {/* Filters and Search */}
-        <div className="flex flex-col md:flex-row gap-4 mb-12 max-w-4xl mx-auto">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-8 sm:mb-12 max-w-4xl mx-auto">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 sm:w-5 sm:h-5" />
             <Input
               placeholder="Search events..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 h-12"
+              className="pl-8 sm:pl-10 h-10 sm:h-12 text-sm sm:text-base"
             />
           </div>
           
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-full md:w-48 h-12">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category === 'all' ? 'All Categories' : category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-full md:w-48 h-12">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="date">Date</SelectItem>
-              <SelectItem value="price">Price</SelectItem>
-              <SelectItem value="popularity">Popularity</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+              <SelectTrigger className="w-full sm:w-48 h-10 sm:h-12 text-sm sm:text-base">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category === 'all' ? 'All Categories' : category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-full sm:w-48 h-10 sm:h-12 text-sm sm:text-base">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="date">Date</SelectItem>
+                <SelectItem value="price">Price</SelectItem>
+                <SelectItem value="popularity">Popularity</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {filteredEvents.map((event, index) => (
             <div 
               key={event.id} 
@@ -165,13 +167,13 @@ const EventsSection = () => {
 
         {/* Load More Button */}
         {filteredEvents.length > 0 && (
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-12">
             <Button 
               variant="outline" 
               size="lg"
-              className="hover-lift border-2 hover:border-primary transition-all duration-300"
+              className="hover-lift border-2 hover:border-primary transition-all duration-300 text-sm sm:text-base px-6 sm:px-8"
             >
-              <Grid2x2 className="w-5 h-5 mr-2" />
+              <Grid2x2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               Load More Events
             </Button>
           </div>
@@ -179,10 +181,10 @@ const EventsSection = () => {
 
         {/* No Results */}
         {filteredEvents.length === 0 && (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl font-semibold mb-2">No events found</h3>
-            <p className="text-muted-foreground">
+          <div className="text-center py-12 sm:py-16">
+            <div className="text-4xl sm:text-6xl mb-4">🔍</div>
+            <h3 className="text-xl sm:text-2xl font-semibold mb-2">No events found</h3>
+            <p className="text-muted-foreground text-sm sm:text-base">
               Try adjusting your search criteria or browse all events.
             </p>
           </div>

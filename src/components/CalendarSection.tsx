@@ -84,53 +84,54 @@ const CalendarSection = () => {
   ];
 
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayNamesShort = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   return (
-    <section id="calendar" className="py-20">
-      <div className="container mx-auto section-padding">
+    <section id="calendar" className="py-12 sm:py-16 lg:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
             Event{' '}
             <span className="gradient-text">Calendar</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Browse events by date and plan your schedule accordingly.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {/* Calendar */}
           <div className="lg:col-span-2">
             <Card className="shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-                <CardTitle className="text-2xl">
+                <CardTitle className="text-lg sm:text-xl md:text-2xl">
                   {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
                 </CardTitle>
-                <div className="flex space-x-2">
+                <div className="flex space-x-1 sm:space-x-2">
                   <Button 
                     variant="outline" 
                     size="icon"
                     onClick={() => navigateMonth('prev')}
-                    className="hover-lift"
+                    className="hover-lift w-8 h-8 sm:w-10 sm:h-10"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
                   <Button 
                     variant="outline" 
                     size="icon"
                     onClick={() => navigateMonth('next')}
-                    className="hover-lift"
+                    className="hover-lift w-8 h-8 sm:w-10 sm:h-10"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-3 sm:p-6">
                 {/* Day Headers */}
-                <div className="grid grid-cols-7 gap-1 mb-4">
-                  {dayNames.map(day => (
-                    <div key={day} className="text-center text-sm font-medium text-muted-foreground py-2">
+                <div className="grid grid-cols-7 gap-1 mb-2 sm:mb-4">
+                  {(window.innerWidth < 640 ? dayNamesShort : dayNames).map(day => (
+                    <div key={day} className="text-center text-xs sm:text-sm font-medium text-muted-foreground py-1 sm:py-2">
                       {day}
                     </div>
                   ))}
@@ -144,7 +145,7 @@ const CalendarSection = () => {
                       onClick={() => handleDateClick(day)}
                       disabled={!day}
                       className={`
-                        relative h-12 rounded-lg transition-all duration-200
+                        relative h-8 sm:h-10 md:h-12 rounded-lg transition-all duration-200 text-xs sm:text-sm
                         ${day 
                           ? 'hover:bg-muted cursor-pointer' 
                           : 'cursor-default'
@@ -160,9 +161,9 @@ const CalendarSection = () => {
                     >
                       {day && (
                         <>
-                          <span className="text-sm">{day}</span>
+                          <span>{day}</span>
                           {hasEvents(day) && (
-                            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 gradient-bg rounded-full" />
+                            <div className="absolute bottom-0.5 sm:bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 gradient-bg rounded-full" />
                           )}
                         </>
                       )}
@@ -177,38 +178,40 @@ const CalendarSection = () => {
           <div>
             <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <CalendarIcon className="w-5 h-5 mr-2 text-primary" />
-                  {selectedDate 
-                    ? `Events for ${selectedDate.toLocaleDateString()}`
-                    : 'Select a Date'
-                  }
+                <CardTitle className="flex items-center text-base sm:text-lg">
+                  <CalendarIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-primary" />
+                  <span className="truncate">
+                    {selectedDate 
+                      ? `Events for ${selectedDate.toLocaleDateString()}`
+                      : 'Select a Date'
+                    }
+                  </span>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-3 sm:p-6">
                 {selectedDate ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {getEventsForDay(selectedDate.getDate()).length > 0 ? (
                       getEventsForDay(selectedDate.getDate()).map((event, index) => (
-                        <div key={index} className="border rounded-lg p-4 hover-lift">
-                          <h4 className="font-semibold mb-2">{event.title}</h4>
-                          <p className="text-sm text-muted-foreground mb-2">{event.time}</p>
+                        <div key={index} className="border rounded-lg p-3 sm:p-4 hover-lift">
+                          <h4 className="font-semibold mb-2 text-sm sm:text-base">{event.title}</h4>
+                          <p className="text-xs sm:text-sm text-muted-foreground mb-2">{event.time}</p>
                           <Badge variant="secondary" className="text-xs">
                             {event.type}
                           </Badge>
                         </div>
                       ))
                     ) : (
-                      <div className="text-center py-8 text-muted-foreground">
-                        <CalendarIcon className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                        <p>No events scheduled for this date</p>
+                      <div className="text-center py-6 sm:py-8 text-muted-foreground">
+                        <CalendarIcon className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 opacity-50" />
+                        <p className="text-sm sm:text-base">No events scheduled for this date</p>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <CalendarIcon className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>Click on a date to view events</p>
+                  <div className="text-center py-6 sm:py-8 text-muted-foreground">
+                    <CalendarIcon className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 opacity-50" />
+                    <p className="text-sm sm:text-base">Click on a date to view events</p>
                   </div>
                 )}
               </CardContent>
